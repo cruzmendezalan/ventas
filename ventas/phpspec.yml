@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: ventas
+        psr4_prefix: ventas
+        src_path: app
