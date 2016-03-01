@@ -8,6 +8,7 @@
 	<!-- <title></title> -->
 	<!-- <link rel="stylesheet" href=""> -->
 	{!! Html::style('assets/css/bootstrap.css') !!}
+	{!! Html::style('assets/css/ventas.css') !!}
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -17,7 +18,37 @@
 	@yield('estilos')
 </head>
 <body>
+	<div class="container barrasuperior">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<nav class="navbar navbar-default">
+				  <div class="container-fluid">
+				    <div class="navbar-header">
+				      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				        <span class="sr-only">Toggle navigation</span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				        <span class="icon-bar"></span>
+				      </button>
+				      
+				    </div>
+
+				    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				      <ul class="nav navbar-nav">
+				        <li><a href="#">Vender</a></li>
+				      	<li><a href="#">Productos</a></li>
+				      	<li><a href="#">Administrar</a></li>
+				      	<li><a href="#">Imprimir</a></li>
+				      </ul>
+				    </div>
+				  </div>
+				</nav>
+			</div>
+		</div>
+	</div>
+	
 	@yield('main')
+	{!! Html::script('assets/js/jquery-2.2.1.min.js') !!}
 	{!! Html::script('assets/js/bootstrap.min.js') !!}
 	@yield('javascript')
 </body>
