@@ -1,55 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	@yield('titulo')
-	<!-- <title></title> -->
-	<!-- <link rel="stylesheet" href=""> -->
-	{!! Html::style('assets/css/bootstrap.css') !!}
-	{!! Html::style('assets/css/ventas.css') !!}
-	<!-- Fondo Estilos -->
-	{!! Html::style('assets/css/normalize.css') !!}
-	{!! Html::style('assets/css/svg.css') !!}
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-	<!--[if lt IE 9]>
-		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-	<![endif]-->
-	@yield('estilos')
-</head>
-<body>
-	<div class="container barrasuperior">
-		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				<nav class="navbar navbar-default">
-				  <div class="container-fluid">
-				    <div class="navbar-header">
-				      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-				        <span class="sr-only">Toggle navigation</span>
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-				        <span class="icon-bar"></span>
-				      </button>
-				      
-				    </div>
+@extends('layouts.origen')
+@section('estilos')
+{!! Html::style('assets/css/normalize.css') !!}
+{!! Html::style('assets/css/svg.css') !!}
+@endsection
 
-				    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				      <ul class="nav navbar-nav">
-				        <li><a href="#">Vender</a></li>
-				      	<li><a href="#">Productos</a></li>
-				      	<li><a href="#">Administrar</a></li>
-				      	<li><a href="#">Imprimir</a></li>
-				      </ul>
-				    </div>
-				  </div>
-				</nav>
-			</div>
-		</div>
-	</div>
-	@yield('main')
+
+
+@section('titulo')
+<title>Titulo de prueba</title>
+@endsection
+
+@section('main')
+
   <div class="svg-container">
   <div class="svg-container__content"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 2702 1819" enable-background="new 0 0 2702 1819" xml:space="preserve">
     <defs>
@@ -3115,13 +3077,10 @@
 
 <div class="sol0mka-learn-more"><style>.sol0mka-learn-more{position: fixed;top: 0;right: 10px;position: fixed;}.sol0mka-learn-more__link{width: 80px;padding-bottom: 120%;background: #3478bd url('http://blog.legomushroom.com/learn-more.png') no-repeat center center;background-size: 70% auto;display: block;border-bottom-left-radius: 3px;border-bottom-right-radius: 3px;}.sol0mka-learn-more__link:hover{background-color: #387fc7;}@media all and (max-width:1440px){.sol0mka-learn-more__link{width: 60px;}}@media all and (max-width:1280px){.sol0mka-learn-more__link{width: 50px;}@media all and (max-width:505px){.sol0mka-learn-more__link{display: none;}}@media only screen and (-webkit-min-device-pixel-ratio: 2), (min-resolution: 144dpi){.sol0mka-learn-more__link{background: #3478bd url('http://blog.legomushroom.com/learn-more@2x.png') no-repeat center center;background-size: 53px 75px;background-size: 70% auto;}}</style>
 
-	
-	{!! Html::script('assets/js/jquery-2.2.1.min.js') !!}
-	{!! Html::script('assets/js/bootstrap.min.js') !!}
-	<!-- JS Fondo -->
-	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-	<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/6859/tween.min_1.js'></script>
-	{!! Html::script('assets/js/svg.js') !!}
-	@yield('javascript')
-</body>
-</html>
+@endsection
+
+@section('javascript')
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/6859/tween.min_1.js'></script>
+{!! Html::script('assets/js/svg.js') !!}
+@endsection

@@ -15,3 +15,6 @@ Route::get('/', function () {
     return view('empleado.index');
 });
 Route::get('controlador',['uses'=>'HomeController@index'] );
+Route::get('svg',function(){
+	return view('test.svg');
+});

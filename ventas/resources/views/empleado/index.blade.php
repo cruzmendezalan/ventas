@@ -48,6 +48,17 @@
 						<tr><td>12...</td></tr>
 					</table>
 				</div>
+				<div class="panel-footer">
+					<table class="table table-bordered">
+						<tr>
+							<td><label for="">Descuento</label></td>
+							<td><input type="text" name="" id="input" class="form-control" value="" required="required" pattern="" title=""></td>
+						</tr>
+						<tr><td colspan="2">
+							<button type="button" class="btn btn-primary btn-block">Vender</button>
+						</td></tr>
+					</table>
+				</div>
 			</div>
 		</div>
 		<div class="col-md-8">
@@ -159,13 +170,13 @@
 				<div class="panel-footer">
 					<table class="table table-bordered">
 						<tr>
-							<td class="col-md-6"></td><td class="col-md-4">Subtotal</td><td class="col-md-2"></td>
+							<td rowspan="3" class="col-md-6">NOTAS:<textarea class="form-control" rows="3" style="resize: none;"></textarea></td><td class="col-md-2">Subtotal</td><td class="col-md-2"></td>
 						</tr>
 						<tr>
-							<td class="col-md-6"></td><td class="col-md-4">IVA</td><td class="col-md-2"></td>
+							<td class="col-md-2">IVA</td><td class="col-md-2"></td>
 						</tr>
 						<tr>
-							<td class="col-md-6"></td><td class="col-md-4">Total</td><td class="col-md-2"></td>
+							<td class="col-md-2">Total</td><td class="col-md-2"></td>
 						</tr>
 					</table>
 				</div>
