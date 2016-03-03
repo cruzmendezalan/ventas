@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	@yield('titulo')
 	<!-- <title></title> -->
+	<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 	<!-- <link rel="stylesheet" href=""> -->
 	{!! Html::style('assets/css/bootstrap.css') !!}
 	{!! Html::style('assets/css/ventas.css') !!}
@@ -38,9 +39,19 @@
 
 				    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				      <ul class="nav navbar-nav">
-				        <li><a href="#">Vender</a></li>
-				      	<li><a href="#">Productos</a></li>
-				      	<li><a href="#">Administrar</a></li>
+				        <li><a href="{{ url('/') }}">Vender</a></li>
+				      	<li><a href="#">Clientes</a></li>
+				      	<li class="dropdown">
+				      	    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrar <span class="caret"></span></a>
+				      	    <ul class="dropdown-menu">
+				      	        <li><a href="administrar/productos">Productos</a></li>
+				      	        <li><a href="#">Ventas</a></li>
+				      	        <li role="separator" class="divider"></li>
+				      	        <li><a href="#">Creditos</a></li>
+				      	        <li role="separator" class="divider"></li>
+				      	        <li><a href="#">Usuarios</a></li>
+				      	    </ul>
+				      	</li>
 				      	<li><a href="#">Imprimir</a></li>
 				      </ul>
 				    </div>

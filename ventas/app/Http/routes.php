@@ -14,6 +14,19 @@
 Route::get('/', function () {
     return view('empleado.index');
 });
+
+Route::group(array('prefix' => 'administrar'), function(){
+	// Route::get('clientes', function(){
+	// 	return view('administrar.nuevo.cliente');
+	// });
+	Route::group(array('prefix' => 'productos'), function(){
+		Route::get('/', function(){
+			return view('productos.index');
+		});
+	});
+});
+
+
 Route::get('controlador',['uses'=>'HomeController@index'] );
 Route::get('svg',function(){
 	return view('test.svg');
