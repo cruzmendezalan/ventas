@@ -16,12 +16,14 @@ Route::get('/', function () {
 });
 
 Route::group(array('prefix' => 'administrar'), function(){
-	// Route::get('clientes', function(){
-	// 	return view('administrar.nuevo.cliente');
-	// });
 	Route::group(array('prefix' => 'productos'), function(){
 		Route::get('/', function(){
-			return view('productos.index');
+			return view('administrar.productos.index');
+		});
+	});
+	Route::group(array('prefix' => 'proveedores'), function(){
+		Route::get('/', function(){
+			return view('administrar.proveedores.index');
 		});
 	});
 });

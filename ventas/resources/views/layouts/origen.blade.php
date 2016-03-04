@@ -44,7 +44,8 @@
 				      	<li class="dropdown">
 				      	    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrar <span class="caret"></span></a>
 				      	    <ul class="dropdown-menu">
-				      	        <li><a href="administrar/productos">Productos</a></li>
+                        <li><a href="{{ url('administrar/productos') }}">Productos</a></li>
+				      	        <li><a href="{{ url('administrar/proveedores') }}">Proveedores</a></li>
 				      	        <li><a href="#">Ventas</a></li>
 				      	        <li role="separator" class="divider"></li>
 				      	        <li><a href="#">Creditos</a></li>

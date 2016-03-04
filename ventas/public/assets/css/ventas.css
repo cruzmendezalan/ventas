@@ -22,6 +22,7 @@
 .td-subtotal{
   width: 15%;
 }
+
 .table-fixed-header tr {
 width: 100%;
 display: inline-table;  
@@ -33,10 +34,27 @@ table-layout: fixed;
 }
 .table-fixed-header tbody{
   overflow-y: scroll;
-  height: 300px;
+  height: 350px;
   width: 92%;
   position: absolute;
 }
+
+.table-fixed-header-catalogos tr {
+width: 100%;
+display: inline-table;  
+table-layout: fixed;
+}
+
+.table-fixed-header-catalogos table{
+ height:300px; 
+}
+.table-fixed-header-catalogos tbody{
+  overflow-y: scroll;
+  height: 250px;
+  width: 92%;
+  position: absolute;
+}
+
 /*PANELES*/
 .fixed-panel-productos {
   /*min-height: 100;*/
