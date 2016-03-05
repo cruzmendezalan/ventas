@@ -6,11 +6,85 @@
 
 @section('javascript')
 <script>
-	
+$(function() {
+	$('#categorias-modal').on('click', function(event) {
+		$.ajax({
+		  xhr: function()
+		  {
+		    var xhr = new window.XMLHttpRequest();
+		    //Upload progress
+		    // xhr.upload.addEventListener("progress", function(evt){
+		    //   if (evt.lengthComputable) {
+		    //     var percentComplete = evt.loaded / evt.total;
+		    //     //Do something with upload progress
+
+		    //     console.log(percentComplete);
+		    //   }
+		    // }, false);
+		    //Download progress
+		    xhr.addEventListener("progress", function(evt){
+		      if (evt.lengthComputable) {
+		        var percentComplete = evt.loaded / evt.total;
+		        //Do something with download progress
+		        $("#categoria-pbar").width(percentComplete*100+'%');
+		      }
+		    }, false);
+		    return xhr;
+		  },
+		  type: 'GET',
+		  url: "categorias",
+		  data: {},
+		  success: function(data){
+		    $("div.modal-body-categorias").hide('slow', function() {
+		    $("div.modal-body-categorias").html(data['HTML'])
+		    $("div.modal-body-categorias").show();
+		    });
+		  },
+		  error:function(err){
+		  	console.log(err);
+		  }
+		});
+	});
+	$(document).on('submit','#categorias-form',function(event){
+		event.preventDefault();
+		$.ajax({
+			url: $('#categorias-form').attr('action'),
+			type:'POST',
+			data:$(this).serialize(),
+			success: function(data){
+				// console.log(data);
+			    $("div.modal-body-categorias").hide('slow', function() {
+			    	$("div.modal-body-categorias").html(data['HTML'])
+			    	$("div.modal-body-categorias").show();
+			  	});
+		  }
+		});
+		// console.log("detenido")
+		// console.log( $(this).serialize() );
+	});	
+    console.log( "ready!" );
+});
 </script>
 @endsection
 
 @section('main')
+<div class="modal fade modal-categorias" id="modal-categorias" tabindex="-1" role="dialog" >
+  <div class="modal-dialog ">
+    <div class="modal-content">
+    	<div class="modal-header text-center">
+	  		<h4 class="modal-title">Categorías</h4>
+	  	</div>
+	  	<div class="modal-body modal-body-categorias">
+	  		<div class="progress">
+	  		  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 0%;" id="categoria-pbar">
+	  		    <span class="sr-only">45% Complete</span>
+	  		  </div>
+	  		</div>
+	  	</div>
+    </div>
+  </div>
+</div>
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-8">
@@ -44,7 +118,7 @@
 							</td>
 							<td class="col-md-6">
 								<label for="">Ajustes de productos</label><br>
-								<button type="button" class="btn btn-info">Categorías</button>
+								<button type="button" id="categorias-modal" class="btn btn-info" data-toggle="modal" data-target=".modal-categorias">Categorías</button>
 								<!-- <button type="button" class="btn btn-default">Editar Categorías</button> -->
 							</td>
 						</tr>

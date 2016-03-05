@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="<?php echo csrf_token() ?>"/>
 	@yield('titulo')
 	<!-- <title></title> -->
 	<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
@@ -3129,6 +3130,7 @@
 
 	
 	{!! Html::script('assets/js/jquery-2.2.1.min.js') !!}
+  {!! Html::script('assets/js/config.js') !!}
 	{!! Html::script('assets/js/bootstrap.min.js') !!}
 	<!-- JS Fondo -->
 	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>

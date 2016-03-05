@@ -26,6 +26,13 @@ Route::group(array('prefix' => 'administrar'), function(){
 			return view('administrar.proveedores.index');
 		});
 	});
+	Route::group(array('prefix'=>'categorias'),function (){
+		Route::post('/',['uses'=>'CategoriasController@index']);
+		Route::post('store',[
+							'as'=>'categorias.store',
+							'uses'=>'CategoriasController@store']);
+	});
+	Route::resource('categorias','CategoriasController');
 });
 
 
