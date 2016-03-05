@@ -63,7 +63,17 @@ return [
             'prefix'    => '',
             'strict'    => false,
         ],
-
+        'dbantigua'  => [
+            'driver'     => 'mysql',
+            'host'       => env('DBANTIGUA_HOST', 'localhost'),
+            'database'   => env('DBANTIGUA_DATABASE', 'forge'),
+            'username'   => env('DBANTIGUA_USERNAME', 'forge'),
+            'password'   => env('DBANTIGUA_PASSWORD', ''),
+            'charset'    => 'utf8',
+            'collation'  => 'utf8_unicode_ci',
+            'prefix'     => '',
+            'strict'     => false,
+         ],
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),
