@@ -10,11 +10,16 @@
 		<thead class="bg-primary">
 			<tr>
 				@foreach ($categorias[0]->getAttributes() as $etiqueta => $valor)
-					@if (strcmp($etiqueta, "id"))
-						<td> {{ $etiqueta }} </td>
+					@if (!strcmp($etiqueta, "id"))
+						<td class="col-md-1"> </td>
+					@elseif( strcmp($etiqueta, "Nombre") )
+						<td class="col-md-9">
+							{{ $etiqueta }}
+						</td>
+					@else
+						<td class="col-md-2"> {{ $etiqueta }} </td>
 					@endif
 				@endforeach
-				<td></td>
 			</tr>
 		</thead>
 		<tbody>
@@ -22,13 +27,13 @@
 				<tr>
 					@foreach ($categoria->getAttributes() as $etiqueta => $valor)
 						@if(!strcmp($etiqueta, "id"))
-							<td>
+							<td >
 								<button type="button" class="btn btn-default eliminar-categoria">
 								  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 								</button>
 							</td>
 						@else
-							<td> {{ $valor }} </td>
+							<td > {{ $valor }} </td>
 						@endif
 					@endforeach
 				</tr>

@@ -1,0 +1,1 @@
+{!! Form::select("categoria_id", $categorias, null,array('class'=>'form-control','required','id'=>'categoria_id')) !!}

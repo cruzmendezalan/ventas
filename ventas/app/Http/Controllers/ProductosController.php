@@ -7,26 +7,18 @@ use Illuminate\Http\Request;
 use ventas\Http\Requests;
 use ventas\Http\Controllers\Controller;
 use \ventas\Categorias;
+use \ventas\Productos;
 
-class CategoriasController extends Controller
+class ProductosController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    private function rendercategorias($categoriaAgregada){
-        $categorias = Categorias::select('nombre as Nombre','descripcion as Descripción','id')->get();
-        $vista = view('administrar.categorias.index')->with("categorias",$categorias)->with("categoriaAgregada",$categoriaAgregada)->render();
-        return $vista;
-    }
-
-    public function index()
-    {
-        // $vista = $this->rendercategorias(False);
-        return response()->json([
-                            'select-categorias'=>view('administrar.categorias.categorias-select')->with('categorias',Categorias::lists('nombre','id'))->render(),
-                            'HTML'=>$this->rendercategorias(False)]);
+    public function index(){
+        $categorias = Categorias::lists('nombre','id');
+        return view('administrar.productos.index')->with("categorias",$categorias);
     }
 
     /**
@@ -48,13 +40,6 @@ class CategoriasController extends Controller
     public function store(Request $request)
     {
         //
-        if ($request->ajax()) {
-            Categorias::create($request->all());
-            return response()->json([
-                'select-categorias'=>view('administrar.categorias.categorias-select')->with('categorias',Categorias::lists('nombre','id'))->render(),
-                "HTML"=> $this->rendercategorias(True)
-            ]);
-        }
     }
 
     /**
@@ -99,6 +84,6 @@ class CategoriasController extends Controller
      */
     public function destroy($id)
     {
-        
+        //
     }
 }

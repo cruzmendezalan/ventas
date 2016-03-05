@@ -8,8 +8,10 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema ventas
 -- -----------------------------------------------------
+
 DROP SCHEMA IF EXISTS `ventas` ;
 CREATE SCHEMA IF NOT EXISTS `ventas` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci ;
+grant all on `ventas`.* to 'ventasusr'@'localhost' identified by 'ventas';
 USE `ventas` ;
 
 -- -----------------------------------------------------

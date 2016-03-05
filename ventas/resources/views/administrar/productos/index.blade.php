@@ -56,6 +56,7 @@ $(function() {
 			    $("div.modal-body-categorias").hide('slow', function() {
 			    	$("div.modal-body-categorias").html(data['HTML'])
 			    	$("div.modal-body-categorias").show();
+			    	$('#categoria_id').html(data['select-categorias']);
 			  	});
 		  }
 		});
@@ -100,12 +101,7 @@ $(function() {
 						<tr>
 							<td class="col-md-3">
 								<label for="" class="text-center">Categoria</label>
-								<select name="" id="" class="form-control">
-									<option value="a">Todos </option>
-									<option value="a">Categoria A</option>
-									<option value="a">Categoria B</option>
-									<option value="a">Categoria C</option>
-								</select>
+								@include('administrar.categorias.categorias-select', array('categorias' => $categorias))
 							</td>
 							<td class="col-md-3">
 								<label for="" class="text-center">Proveedor</label>

@@ -17,22 +17,20 @@ Route::get('/', function () {
 
 Route::group(array('prefix' => 'administrar'), function(){
 	Route::group(array('prefix' => 'productos'), function(){
-		Route::get('/', function(){
-			return view('administrar.productos.index');
-		});
+		Route::get('/',['uses'=>'ProductosController@index']);
 	});
 	Route::group(array('prefix' => 'proveedores'), function(){
 		Route::get('/', function(){
 			return view('administrar.proveedores.index');
 		});
 	});
+	Route::resource('categorias','CategoriasController');
 	Route::group(array('prefix'=>'categorias'),function (){
 		Route::post('/',['uses'=>'CategoriasController@index']);
 		Route::post('store',[
 							'as'=>'categorias.store',
 							'uses'=>'CategoriasController@store']);
 	});
-	Route::resource('categorias','CategoriasController');
 });
 
 
