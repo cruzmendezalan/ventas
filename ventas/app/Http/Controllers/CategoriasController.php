@@ -96,6 +96,6 @@ class CategoriasController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }
