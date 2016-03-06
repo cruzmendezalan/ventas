@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use ventas\Http\Requests;
 use ventas\Http\Controllers\Controller;
 use \ventas\ProductosAntiguos;
+use \ventas\Productos;
+use DB;
 
 class HomeController extends Controller
 {
@@ -17,8 +19,24 @@ class HomeController extends Controller
      */
     public function index()
     {   
-        $productos = ProductosAntiguos::orderBy('nombre','asc')->get();
+        $productosantiguos = ProductosAntiguos::all();
+        DB::beginTransaction();
+        foreach ($productosantiguos as $productoantiguo) {
+            Productos::create([
+                'nombre'=>$productoantiguo->nombre,
+                'precio_publico'=>$productoantiguo->precio,
+                'precio_proveedor'=>$productoantiguo->precio,
+                'precio_mayoreo'=>$productoantiguo->precio,
+                'descripcion'=>$productoantiguo->descripcion,
+                'codigodebarras'=>$productoantiguo->codigodebarras,
+                'categorias_id'=>1,
+                'proveedores_id'=>1
+              ]);
+        }
+        DB::commit();
+        $productos = Productos::all();
         return view('test.migracionproductos')->with("productos",$productos);
+
     }
 
     /**
