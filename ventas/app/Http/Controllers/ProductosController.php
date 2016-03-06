@@ -18,7 +18,16 @@ class ProductosController extends Controller
      */
     public function index(){
         $categorias = Categorias::lists('nombre','id');
-        return view('administrar.productos.index')->with("categorias",$categorias);
+        $productos = Productos::select('nombre AS Nombre',
+                                        'descripcion as Descripción',
+                                        // 'contenido as Contenido',
+                                        'precio_publico as PrecioPublico',
+                                        'precio_proveedor as PrecioProveedor',
+                                        'precio_mayoreo as PrecioMayoreo',
+                                        'codigodebarras as CodigoDeBarras'
+                                        )->get();
+        return view('administrar.productos.index')->with("categorias",$categorias)
+                                                  ->with("productos",$productos);
     }
 
     /**

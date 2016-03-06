@@ -120,41 +120,31 @@ $(function() {
 						</tr>
 					</thead>
 					</table>
-					<div class="table-fixed-header-catalogos">
-						<table class="table table-hover table-condensed">
-							<thead>
-								<th>ColumnaA</th><th>ColumnaB</th><th>ColumnaC</th><th>ColumnaD</th><th>ColumnaE</th>
-							</thead>
-							<tbody>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							</tbody>
+					<div class="table-fixed-header-catalogos ">
+						<table class="table table-hover table-condensed table-bordered">
+							@if ($productos->first())
+								<thead class="bg-primary">
+									<tr>
+										@foreach ($productos[0]->getAttributes() as $etiqueta => $valor)
+											<td> {{ $etiqueta }} </td>
+										@endforeach
+									</tr>
+								</thead>
+								<tbody>
+									@foreach ($productos as $producto)
+										<tr>
+											@foreach ($producto->getAttributes() as $etiqueta => $valor)
+												<td> {{ $valor }} </td>
+											@endforeach
+										</tr>
+									@endforeach
+								</tbody>
+							@else
+							 <div class="alert alert-warning alert-dismissible" role="alert">
+							 	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							 	<strong>Aviso!</strong> No hay ningun producto registrado.
+							 </div>
+							@endif
 						</table>
 					</div>	
 				</div>

@@ -31,7 +31,7 @@
 					@else
 					 <div class="alert alert-warning alert-dismissible" role="alert">
 					 	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					 	<strong>Aviso!</strong> No hay ninguna categoría registrada.
+					 	<strong>Aviso!</strong> No hay ningun producto registrado.
 					 </div>
 					@endif
 					</table>
