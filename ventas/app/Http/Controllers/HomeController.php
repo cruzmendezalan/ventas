@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 // use Illuminate\Contracts\View;
 use ventas\Http\Requests;
 use ventas\Http\Controllers\Controller;
+use \ventas\ProductosAntiguos;
 
 class HomeController extends Controller
 {
@@ -15,13 +16,9 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
-        $contenido  = "algun valor";
-        $render  = view('test.render');
-        return view('test.pruebas')->with("variable",$contenido)
-                                    ->with("render",$render);
-        // return view('test.pruebas',["variable"=>$contenido]);
+    {   
+        $productos = ProductosAntiguos::orderBy('nombre','asc')->get();
+        return view('test.migracionproductos')->with("productos",$productos);
     }
 
     /**
