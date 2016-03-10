@@ -6,22 +6,36 @@
 
 @section('javascript')
 <script>
+$(window).on('hashchange', function(){
+        if (window.location.hash) {
+            var page = window.location.hash.replace('#', '');
+            if (page == Number.NaN || page <= 0) {
+                return false;
+            } else {
+                getProductos(page);
+            }
+        }});
+function getProductos(page) {
+        $.ajax({
+            url: '?page=' + page,
+            dataType: 'json',
+        }).done(function(data) {
+        	$("#productos-paginador").html(data['paginador'])
+            $('#productos-body').fadeOut('fast', function() {
+            	$('#productos-body').html(data['productos']);
+            	$('#productos-body').show('slow');
+            });
+            location.hash = page;
+        }).fail(function(err) {
+            alert('No se pudieron cargar los productos.');
+            console.log(err)
+        });}
 $(function() {
 	$('#categorias-modal').on('click', function(event) {
 		$.ajax({
 		  xhr: function()
 		  {
 		    var xhr = new window.XMLHttpRequest();
-		    //Upload progress
-		    // xhr.upload.addEventListener("progress", function(evt){
-		    //   if (evt.lengthComputable) {
-		    //     var percentComplete = evt.loaded / evt.total;
-		    //     //Do something with upload progress
-
-		    //     console.log(percentComplete);
-		    //   }
-		    // }, false);
-		    //Download progress
 		    xhr.addEventListener("progress", function(evt){
 		      if (evt.lengthComputable) {
 		        var percentComplete = evt.loaded / evt.total;
@@ -43,8 +57,7 @@ $(function() {
 		  error:function(err){
 		  	console.log(err);
 		  }
-		});
-	});
+		});});
 	$(document).on('submit','#categorias-form',function(event){
 		event.preventDefault();
 		$.ajax({
@@ -63,8 +76,16 @@ $(function() {
 		// console.log("detenido")
 		// console.log( $(this).serialize() );
 	});	
+	$("#productos-table").on('click','.clickable-row',function(evt){
+		$(this).addClass('info').siblings().removeClass('info');
+	});
+	$(document).on('click', '.pagination a', function(e) {
+            getProductos($(this).attr('href').split('page=')[1]);
+            e.preventDefault();
+        });
     console.log( "ready!" );
 });
+
 </script>
 @endsection
 
@@ -120,8 +141,8 @@ $(function() {
 						</tr>
 					</thead>
 					</table>
-					<div class="table-fixed-header-catalogos ">
-						<table class="table table-hover table-condensed table-bordered">
+					<div class="table-fixed-header-catalogos " >
+						<table class="table table-condensed table-hover" id="productos-table">
 							@if ($productos->first())
 								<thead class="bg-primary">
 									<tr>
@@ -130,14 +151,8 @@ $(function() {
 										@endforeach
 									</tr>
 								</thead>
-								<tbody>
-									@foreach ($productos as $producto)
-										<tr>
-											@foreach ($producto->getAttributes() as $etiqueta => $valor)
-												<td> {{ $valor }} </td>
-											@endforeach
-										</tr>
-									@endforeach
+								<tbody id="productos-body">
+									@include('administrar.productos.productos-tabla', array('productos' => $productos))
 								</tbody>
 							@else
 							 <div class="alert alert-warning alert-dismissible" role="alert">
@@ -146,66 +161,17 @@ $(function() {
 							 </div>
 							@endif
 						</table>
+						<div class="text-center" id="productos-paginador">
+							@include('administrar.productos.paginador', array('productos' => $productos))
+						</div>
+						
 					</div>	
 				</div>
 			</div>
 		</div>
 		<div class="col-md-4">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<div class="panel-title">
-						<h4 class="txt-white text-center">Producto</h4>
-					</div>
-				</div>
-				<div class="panel-body bg-default">
-					{!! Form::open(['url'=>'producto','class'=>'form-horizontal']) !!}
-						<table class="table">
-							<thead>
-								<tr>
-									<td class="col-md-4"></td>
-									<td class="col-md-8"></td>
-								</tr>
-							</thead>
-							<tr>
-								<td><label for="" class="col-md-4">Nombre:</label></td>
-								<td><input type="text" name="" id="input" class="form-control col-md-8" value="" required="required" pattern="" title=""></td>
-							</tr>
-							<tr>
-								<td><label for="" class="col-md-4">Proveedor:</label></td>
-								<td>
-									<select name="" id="" class="form-control">
-										<option value="a">Sin proveedor </option>
-										<option value="a">Proveedor A</option>
-										<option value="a">Proveedor B</option>
-										<option value="a">Proveedor C</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td><label for="" class="col-md-4">Precio proveedor:</label></td>
-								<td><input type="text" name="" id="input" class="form-control col-md-8" value="" required="required" pattern="" title=""></td>
-							</tr>
-							<tr>
-								<td><label for="" class="col-md-4">Precio publico:</label></td>
-								<td><input type="text" name="" id="input" class="form-control col-md-8" value="" required="required" pattern="" title=""></td>
-							</tr>
-							<tr>
-								<td><label for="" class="col-md-4">Precio mayoreo:</label></td>
-								<td><input type="text" name="" id="input" class="form-control col-md-8" value="" required="required" pattern="" title=""></td>
-							</tr>
-							<tr>
-								<td><label for="" class="col-md-4">Cod.barras:</label></td>
-								<td><input type="text" name="" id="input" class="form-control col-md-8" value="" required="required" pattern="" title=""></td>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<button type="submit" class="btn btn-primary btn-block">Guardar</button>
-								</td>
-							</tr>
-
-						</table>
-					{!! Form::close() !!}
-				</div>
+			<div class="panel panel-primary" id="productos-set">
+				@include('administrar.productos.nuevo-form', array('categorias',$categorias))
 			</div>
 		</div>
 	</div>

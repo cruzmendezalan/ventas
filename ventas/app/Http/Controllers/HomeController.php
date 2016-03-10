@@ -23,19 +23,21 @@ class HomeController extends Controller
         DB::beginTransaction();
         foreach ($productosantiguos as $productoantiguo) {
             Productos::create([
-                'nombre'=>$productoantiguo->nombre,
-                'precio_publico'=>$productoantiguo->precio,
-                'precio_proveedor'=>$productoantiguo->precio,
-                'precio_mayoreo'=>$productoantiguo->precio,
-                'descripcion'=>$productoantiguo->descripcion,
-                'codigodebarras'=>$productoantiguo->codigodebarras,
-                'categorias_id'=>1,
-                'proveedores_id'=>1
+                'nombre'            =>$productoantiguo->nombre,
+                'precio_publico'    =>number_format((float)($productoantiguo->precio),2, '.', ''),
+                'precio_proveedor'  =>number_format((float)($productoantiguo->precio),2, '.', ''),
+                'precio_mayoreo'    =>number_format((float)($productoantiguo->precio),2, '.', ''),
+                'descripcion'       =>$productoantiguo->descripcion,
+                'codigodebarras'    =>$productoantiguo->codigodebarras,
+                'categorias_id'     =>1,
+                'proveedores_id'    =>1
               ]);
         }
         DB::commit();
         $productos = Productos::all();
+        // $productos = 3;
         return view('test.migracionproductos')->with("productos",$productos);
+
 
     }
 
