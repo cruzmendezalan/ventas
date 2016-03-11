@@ -15,13 +15,22 @@ $(window).on('hashchange', function(){
                 getProductos(page);
             }
         }});
+$('.decimal').keypress(function(eve) {
+  if ((eve.which != 46 || $(this).val().indexOf('.') != -1) && (eve.which < 48 || eve.which > 57) || (eve.which == 46 && $(this).caret().start == 0) ) {
+    eve.preventDefault();
+  }
+$('.decimal').keyup(function(eve) {
+   if($(this).val().indexOf('.') == 0) {    $(this).val($(this).val().substring(1));
+    }
+  });
+});
 function getProductos(page) {
         $.ajax({
             url: '?page=' + page,
             dataType: 'json',
         }).done(function(data) {
-        	$("#productos-paginador").html(data['paginador'])
-            $('#productos-body').fadeOut('fast', function() {
+	        	$("#productos-paginador").html(data['paginador'])
+	            $('#productos-body').fadeOut('fast', function() {
             	$('#productos-body').html(data['productos']);
             	$('#productos-body').show('slow');
             });
@@ -29,7 +38,25 @@ function getProductos(page) {
         }).fail(function(err) {
             alert('No se pudieron cargar los productos.');
             console.log(err)
-        });}
+        });
+    }
+function setProducto(obj){
+	var producto = $(obj).attr('producto');
+	$.ajax({
+		url: 'productos/'+producto+'/edit',
+		type: 'GET',
+	})
+	.done(function(data) {
+		$('#productos-set').fadeOut('fast', function() {
+        $('#productos-set').html(data);
+        $('#productos-set').show('slow');
+    	});
+	})
+	.fail(function(err) {
+		console.log(err)
+	});
+	
+}
 $(function() {
 	$('#categorias-modal').on('click', function(event) {
 		$.ajax({
@@ -69,7 +96,7 @@ $(function() {
 			    $("div.modal-body-categorias").hide('slow', function() {
 			    	$("div.modal-body-categorias").html(data['HTML'])
 			    	$("div.modal-body-categorias").show();
-			    	$('#categoria_id').html(data['select-categorias']);
+			    	$('select[name="categoria_id"]').html(data['select-categorias']);
 			  	});
 		  }
 		});
@@ -78,6 +105,7 @@ $(function() {
 	});	
 	$("#productos-table").on('click','.clickable-row',function(evt){
 		$(this).addClass('info').siblings().removeClass('info');
+		setProducto(this);
 	});
 	$(document).on('click', '.pagination a', function(e) {
             getProductos($(this).attr('href').split('page=')[1]);
@@ -147,7 +175,9 @@ $(function() {
 								<thead class="bg-primary">
 									<tr>
 										@foreach ($productos[0]->getAttributes() as $etiqueta => $valor)
-											<td> {{ $etiqueta }} </td>
+											@if(strcmp($etiqueta, "id"))
+												<td> {{ $etiqueta }} </td>
+											@endif
 										@endforeach
 									</tr>
 								</thead>

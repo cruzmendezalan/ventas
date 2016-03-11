@@ -1,16 +1,10 @@
 <div class="panel-heading">
 	<div class="panel-title">
-		<h4 class="txt-white text-center">Nuevo Producto</h4>
+		<h4 class="txt-white text-center">Editar Producto</h4>
 	</div>
 </div>
 <div class="panel-body bg-default">
-	@if (!empty($creado))
-		<div class="alert alert-warning alert-dismissible" role="alert">
-		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		  <strong>Listo!</strong> {{ $creado }}
-		</div>
-	@endif
-	{!! Form::open(['route'=>'administrar.productos.store','class'=>'form-horizontal']) !!}
+	{!! Form::open(['url'=>'producto','class'=>'form-horizontal']) !!}
 		<table class="table">
 			<thead>
 				<tr>
@@ -20,11 +14,7 @@
 			</thead>
 			<tr>
 				<td>{!! Form::label("Nombre", "Nombre:", ['class'=>'col-md-4']) !!}</td>
-				<td>{!! Form::text("nombre", null, ['class'=>'col-md-8 form-control text-center','required']) !!}</td>
-			</tr>
-			<tr>
-				<td>{!! Form::label("descripcion", "Descripción:", ['class'=>'col-md-4']) !!}</td>
-				<td>{!! Form::text("descripcion", null, ['class'=>'col-md-8 form-control text-center']) !!}</td>
+				<td>{!! Form::text("nombre", $producto->nombre, ['class'=>'col-md-8 form-control text-center','required']) !!}</td>
 			</tr>
 			<tr>
 				<td><label for="" class="col-md-4">Proveedor:</label></td>
@@ -39,23 +29,23 @@
 			</tr>
 			<tr>
 				<td>{!! Form::label("Categoria", "Categoria:", ['class'=>'col-md-4']) !!}</td>
-				<td>@include('administrar.categorias.categorias-select', array('categorias' => $categorias))</td>
+				<td>@include('administrar.categorias.categorias-select', array('categorias' => $categorias, 'producto',$producto))</td>
 			</tr>
 			<tr>
 				<td><label for="" class="col-md-4">Precio proveedor:</label></td>
-				<td>{!! Form::text("precio_proveedor", null, ['class'=>'col-md-8 form-control decimal text-center']) !!}</td>
+				<td>{!! Form::text("precio_proveedor", number_format((float)$producto->precio_proveedor, 2, '.', ''), ['class'=>'col-md-8 form-control text-center']) !!}</td>
 			</tr>
 			<tr>
 				<td><label for="" class="col-md-4">Precio publico:</label></td>
-				<td>{!! Form::text("precio_publico", null, ['class'=>'col-md-8 form-control decimal text-center','required']) !!}</td>
+				<td>{!! Form::text("precio_publico", number_format((float)$producto->precio_publico, 2, '.', ''), ['class'=>'col-md-8 form-control text-center','required']) !!}</td>
 			</tr>
 			<tr>
 				<td><label for="" class="col-md-4">Precio mayoreo:</label></td>
-				<td>{!! Form::text("precio_mayoreo", null, ['class'=>'col-md-8 form-control decimal text-center']) !!}</td>
+				<td>{!! Form::text("precio_mayoreo",number_format((float)$producto->precio_mayoreo, 2, '.', ''), ['class'=>'col-md-8 form-control text-center']) !!}</td>
 			</tr>
 			<tr>
 				<td><label for="" class="col-md-4">Cod.barras:</label></td>
-				<td>{!! Form::text("codigodebarras", null, ['class'=>'col-md-8 form-control text-center']) !!}</td>
+				<td>{!! Form::text("codigodebarras", $producto->codigodebarras, ['class'=>'col-md-8 form-control text-center']) !!}</td>
 			</tr>
 			<tr>
 				<td><button type="submit" class="btn btn-danger btn-block">Cancelar</button></td>

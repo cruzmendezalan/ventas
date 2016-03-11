@@ -2,8 +2,8 @@
 
 namespace ventas\Http\Controllers;
 
-// use Illuminate\Http\Request;
-use Request;
+use Illuminate\Http\Request;
+// use Request;
 use Response;
 use ventas\Http\Requests;
 use ventas\Http\Controllers\Controller;
@@ -17,17 +17,15 @@ class ProductosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(){
+    public function index(Request $request){
         $categorias = Categorias::lists('nombre','id');
         $productos = Productos::select('nombre AS Nombre',
                                         'descripcion as Descripción',
-                                        // 'contenido as Contenido',
                                         'precio_publico as PrecioPublico',
-                                        // 'precio_proveedor as PrecioProveedor',
-                                        // 'precio_mayoreo as PrecioMayoreo',
-                                        'codigodebarras as CodigoDeBarras'
+                                        'codigodebarras as CodigoDeBarras',
+                                        'id'
                                         )->orderBy('Nombre','asc')->paginate(15);
-        if (Request::ajax()) {
+        if ($request->ajax()) {
                 return Response::json(['productos'=>view('administrar.productos.productos-tabla')->with("productos",$productos)->render(),'paginador'=>view('administrar.productos.paginador')->with('productos',$productos)->render()]);
             }
         return view('administrar.productos.index')->with("categorias",$categorias)
@@ -53,6 +51,18 @@ class ProductosController extends Controller
     public function store(Request $request)
     {
         //
+        $proveedor_id = 1;
+        $producto = Productos::create([
+            'nombre'           => $request->input('nombre'),
+            'descripcion'      => $request->input('descripcion'),
+            'precio_proveedor' => $request->input('precio_proveedor'),
+            'precio_publico'   => $request->input('precio_publico'),
+            'precio_mayoreo'   => $request->input('precio_mayoreo'),
+            'codigodebarras'   => $request->input('codigodebarras'),
+            'proveedores_id'   => $proveedor_id,
+            'categorias_id'    => $request->input('categorias_id'),
+        ]);
+        return redirect()->route('administrar.productos.index')->with('creado',"El producto [".$producto->nombre."] se ha creado exitosamente.");
     }
 
     /**
@@ -72,9 +82,14 @@ class ProductosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         //
+        $categorias = Categorias::lists('nombre','id');
+        $producto = Productos::find($id);
+        if ($request->ajax()) {
+            return Response::json(view('administrar.productos.set-form')->with("producto",$producto)->with("categorias",$categorias)->render());
+        }
     }
 
     /**

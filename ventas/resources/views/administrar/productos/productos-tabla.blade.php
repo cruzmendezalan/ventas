@@ -1,9 +1,9 @@
 @foreach ($productos as $producto)
-	<tr class="clickable-row">
+	<tr class="clickable-row" producto="{{$producto->id}}">
 		@foreach ($producto->getAttributes() as $etiqueta => $valor)
 			@if (!strcmp($etiqueta, "PrecioPublico"))
 				<td>{{money_format('%i', $valor)}}</td>
-			@else
+			@elseif(strcmp($etiqueta, "id"))
 				<td> {{ $valor }} </td>
 			@endif
 			

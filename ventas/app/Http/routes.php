@@ -24,6 +24,7 @@ Route::group(array('prefix' => 'administrar'), function(){
 			return view('administrar.proveedores.index');
 		});
 	});
+	Route::resource('productos', 'ProductosController');
 	Route::resource('categorias','CategoriasController');
 	Route::group(array('prefix'=>'categorias'),function (){
 		Route::post('/',['uses'=>'CategoriasController@index']);
