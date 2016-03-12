@@ -25,9 +25,14 @@ $('.decimal').keyup(function(eve) {
   });
 });
 function getProductos(page) {
+		var categoria = $("#categoria_id").val();
+		page = page==null?1:page;
         $.ajax({
             url: '?page=' + page,
             dataType: 'json',
+            data:{
+            	'categoria':categoria
+            },
         }).done(function(data) {
 	        	$("#productos-paginador").html(data['paginador'])
 	            $('#productos-body').fadeOut('fast', function() {
@@ -55,7 +60,10 @@ function setProducto(obj){
 	.fail(function(err) {
 		console.log(err)
 	});
-	
+}
+function changecategoria(obj) {
+	console.log("Change categoría.")
+	getProductos();
 }
 $(function() {
 	$('#categorias-modal').on('click', function(event) {
@@ -149,11 +157,11 @@ $(function() {
 					<table class="table">
 					<thead>
 						<tr>
-							<td class="col-md-3">
+							<td class="col-md-2">
 								<label for="" class="text-center">Categoria</label>
-								@include('administrar.categorias.categorias-select', array('categorias' => $categorias))
+								{!! Form::select("categorias_id", $categorias, null,array('class'=>'form-control','required','id'=>'categoria_id','onchange'=>'changecategoria(this);')) !!}
 							</td>
-							<td class="col-md-3">
+							<td class="col-md-2">
 								<label for="" class="text-center">Proveedor</label>
 								<select name="" id="" class="form-control">
 									<option value="a">Todos </option>
@@ -162,7 +170,7 @@ $(function() {
 									<option value="a">Proveedor C</option>
 								</select>
 							</td>
-							<td class="col-md-6">
+							<td class="col-md-5">
 								<label for="">Ajustes de productos</label><br>
 								<button type="button" id="categorias-modal" class="btn btn-info" data-toggle="modal" data-target=".modal-categorias">Categorías</button>
 								<!-- <button type="button" class="btn btn-default">Editar Categorías</button> -->
@@ -170,6 +178,12 @@ $(function() {
 						</tr>
 					</thead>
 					</table>
+					@if(session('eliminado'))
+						<div class="alert alert-success alert-dismissible" role="alert">
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						  <strong>Listo!</strong> {{ session('eliminado') }}
+						</div>
+					@endif
 					<div class="table-fixed-header-catalogos " >
 						<table class="table table-condensed table-hover" id="productos-table">
 							@if ($productos->first())

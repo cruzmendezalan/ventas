@@ -12,19 +12,34 @@ use \ventas\Productos;
 
 class ProductosController extends Controller
 {
+    
+    private function display($categoria){
+        $objetosporpagina = 15;
+        if ($categoria == null) {
+            $categoria = 1;
+        }
+        $productos = Productos::join('categorias','productos.categorias_id','=','categorias.id')
+                                ->where('productos.categorias_id','=',$categoria)
+                                ->select('productos.nombre AS Nombre',
+                                        'productos.descripcion as Descripción',
+                                        'categorias.nombre as Categoría',
+                                        'precio_publico as PrecioPublico',
+                                        'codigodebarras as CodigoDeBarras',
+                                        'productos.id'
+                                        )
+                                ->orderBy('Nombre','asc')
+                                ->paginate($objetosporpagina);
+        return $productos;
+    }
+
     /**
-     * Display a listing of the resource.
+     * Mostrar la lista de productos, dependiendo de la categoria.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
         $categorias = Categorias::lists('nombre','id');
-        $productos = Productos::select('nombre AS Nombre',
-                                        'descripcion as Descripción',
-                                        'precio_publico as PrecioPublico',
-                                        'codigodebarras as CodigoDeBarras',
-                                        'id'
-                                        )->orderBy('Nombre','asc')->paginate(15);
+        $productos = $this->display($request->input('categoria'));
         if ($request->ajax()) {
                 return Response::json(['productos'=>view('administrar.productos.productos-tabla')->with("productos",$productos)->render(),'paginador'=>view('administrar.productos.paginador')->with('productos',$productos)->render()]);
             }
@@ -53,8 +68,8 @@ class ProductosController extends Controller
         //
         $proveedor_id = 1;
         $producto = Productos::create([
-            'nombre'           => $request->input('nombre'),
-            'descripcion'      => $request->input('descripcion'),
+            'nombre'           => strtoupper($request->input('nombre')),
+            'descripcion'      => strtoupper($request->input('descripcion')),
             'precio_proveedor' => $request->input('precio_proveedor'),
             'precio_publico'   => $request->input('precio_publico'),
             'precio_mayoreo'   => $request->input('precio_mayoreo'),
@@ -112,6 +127,8 @@ class ProductosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $producto = Productos::find($id);
+        $producto->delete();
+        return redirect()->back()->with('eliminado','El producto[ '.$producto->nombre.' ] ha sido eliminado exitosamente.');
     }
 }

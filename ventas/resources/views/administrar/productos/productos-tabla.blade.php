@@ -7,9 +7,11 @@
 				<td> {{ $valor }} </td>
 			@else
 				<td class="col-md-1">
-					<button type="button" class="btn btn-default" aria-label="Left Align">
+					{!! Form::open(['route'=>['administrar.productos.destroy',$producto],'method'=>'DELETE']) !!}
+					<button type="submit" class="btn btn-default" aria-label="Left Align">
 				  	  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 				  	</button>
+				  	{!! Form::close() !!}
 				</td>
 			@endif
 			
