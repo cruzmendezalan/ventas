@@ -60,7 +60,7 @@
 			<tr>
 				<td class="col-md-6"></td>
 				<td class="col-md-3"><button type="submit" class="btn btn-primary btn-block">Guardar</button></td>
-				<td class="col-md-3"><button type="button" class="btn btn-default btn-block">Cancelar</button></td>
+				<td class="col-md-3"><button type="button" class="btn btn-default btn-block" data-dismiss="modal">Cancelar</button></td>
 			</tr>
 		</table>	
 		

@@ -4,10 +4,10 @@
 	</div>
 </div>
 <div class="panel-body bg-default">
-	@if (!empty($creado))
+	@if (session('creado'))
 		<div class="alert alert-warning alert-dismissible" role="alert">
 		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		  <strong>Listo!</strong> {{ $creado }}
+		  <strong>Listo!</strong> {{ session('creado') }}
 		</div>
 	@endif
 	{!! Form::open(['route'=>'administrar.productos.store','class'=>'form-horizontal']) !!}
@@ -20,11 +20,11 @@
 			</thead>
 			<tr>
 				<td>{!! Form::label("Nombre", "Nombre:", ['class'=>'col-md-4']) !!}</td>
-				<td>{!! Form::text("nombre", null, ['class'=>'col-md-8 form-control text-center','required']) !!}</td>
+				<td>{!! Form::text("nombre", null, ['class'=>'col-md-8 form-control text-center mayus','required']) !!}</td>
 			</tr>
 			<tr>
 				<td>{!! Form::label("descripcion", "Descripción:", ['class'=>'col-md-4']) !!}</td>
-				<td>{!! Form::text("descripcion", null, ['class'=>'col-md-8 form-control text-center']) !!}</td>
+				<td>{!! Form::text("descripcion", null, ['class'=>'col-md-8 form-control text-center mayus']) !!}</td>
 			</tr>
 			<tr>
 				<td><label for="" class="col-md-4">Proveedor:</label></td>

@@ -96,7 +96,7 @@ $(function() {
 			    $("div.modal-body-categorias").hide('slow', function() {
 			    	$("div.modal-body-categorias").html(data['HTML'])
 			    	$("div.modal-body-categorias").show();
-			    	$('select[name="categoria_id"]').html(data['select-categorias']);
+			    	$('select[name="categorias_id"]').html(data['select-categorias']);
 			  	});
 		  }
 		});
@@ -122,6 +122,7 @@ $(function() {
   <div class="modal-dialog ">
     <div class="modal-content">
     	<div class="modal-header text-center">
+    		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	  		<h4 class="modal-title">Categorías</h4>
 	  	</div>
 	  	<div class="modal-body modal-body-categorias">
@@ -179,6 +180,7 @@ $(function() {
 												<td> {{ $etiqueta }} </td>
 											@endif
 										@endforeach
+										<td class="col-md-1"></td>
 									</tr>
 								</thead>
 								<tbody id="productos-body">
