@@ -4,7 +4,7 @@
 	</div>
 </div>
 <div class="panel-body bg-default">
-	{!! Form::open(['url'=>'producto','class'=>'form-horizontal']) !!}
+	{!! Form::open(['route'=>['administrar.productos.update',$producto->id],'method'=>'PUT','class'=>'form-horizontal']) !!}
 		<table class="table">
 			<thead>
 				<tr>
@@ -15,6 +15,10 @@
 			<tr>
 				<td>{!! Form::label("Nombre", "Nombre:", ['class'=>'col-md-4']) !!}</td>
 				<td>{!! Form::text("nombre", $producto->nombre, ['class'=>'col-md-8 form-control text-center','required']) !!}</td>
+			</tr>
+			<tr>
+				<td>{!! Form::label("descripcion", "Descripción:", ['class'=>'col-md-4']) !!}</td>
+				<td>{!! Form::text("descripcion", $producto->descripcion, ['class'=>'col-md-8 form-control text-center mayus']) !!}</td>
 			</tr>
 			<tr>
 				<td><label for="" class="col-md-4">Proveedor:</label></td>
@@ -48,7 +52,7 @@
 				<td>{!! Form::text("codigodebarras", $producto->codigodebarras, ['class'=>'col-md-8 form-control text-center']) !!}</td>
 			</tr>
 			<tr>
-				<td><button type="submit" class="btn btn-danger btn-block">Cancelar</button></td>
+				<td><button type="button" class="btn btn-danger btn-block" onclick="resetform();">Cancelar</button></td>
 				<td><button type="submit" class="btn btn-success btn-block">Guardar</button></td>
 			</tr>
 

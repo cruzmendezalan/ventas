@@ -3,7 +3,6 @@
 namespace ventas\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use Request;
 use Response;
 use ventas\Http\Requests;
 use ventas\Http\Controllers\Controller;
@@ -52,9 +51,12 @@ class ProductosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $categorias = Categorias::lists('nombre','id');
+        if ($request->ajax()) {
+            return Response::json(view('administrar.productos.nuevo-form')->with("categorias",$categorias)->render());
+        }
     }
 
     /**
@@ -89,6 +91,7 @@ class ProductosController extends Controller
     public function show($id)
     {
         //
+
     }
 
     /**
@@ -116,7 +119,11 @@ class ProductosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $producto = Productos::find($id);
+        $producto->fill($request->all());
+        $producto->save();
+
+        return redirect()->back()->with('actualizado','El producto ['.$producto->nombre.'] se ha actualizado correctamente.');
     }
 
     /**
@@ -129,6 +136,6 @@ class ProductosController extends Controller
     {
         $producto = Productos::find($id);
         $producto->delete();
-        return redirect()->back()->with('eliminado','El producto[ '.$producto->nombre.' ] ha sido eliminado exitosamente.');
+        return redirect()->back()->with('eliminado','El producto ['.$producto->nombre.'] ha sido eliminado exitosamente.');
     }
 }

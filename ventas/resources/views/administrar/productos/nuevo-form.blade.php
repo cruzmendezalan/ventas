@@ -58,7 +58,7 @@
 				<td>{!! Form::text("codigodebarras", null, ['class'=>'col-md-8 form-control text-center']) !!}</td>
 			</tr>
 			<tr>
-				<td><button type="submit" class="btn btn-danger btn-block">Cancelar</button></td>
+				<td><button type="button" class="btn btn-danger btn-block" onclick="resetform();">Cancelar</button></td>
 				<td><button type="submit" class="btn btn-success btn-block">Guardar</button></td>
 			</tr>
 

@@ -1,7 +1,55 @@
 @extends('layouts.origen')
 
 @section('titulo')
-<title>Catálogo de productos</title>
+<title>Catálogo de proveedores</title>
+@endsection
+
+@section('javascript')
+	{{-- expr --}}
+	<script>
+	function resetform(){
+		$.ajax({
+			url: 'proveedores/create',
+			type: 'GET',
+		})
+		.done(function(data) {
+			$('#proveedores-set').fadeOut('fast', function() {
+	        $('#proveedores-set').html(data);
+	        $('#proveedores-set').show('slow');
+	    	});
+		})
+		.fail(function(err) {
+			console.log(err)
+		});
+	}
+
+	function setProveedor(obj){
+		var proveedor = $(obj).attr('proveedor');
+		$.ajax({
+			url: 'proveedores/'+proveedor+'/edit',
+			type: 'GET',
+		})
+		.done(function(data) {
+			$('#proveedores-set').fadeOut('fast', function() {
+	        $('#proveedores-set').html(data);
+	        $('#proveedores-set').show('slow');
+	    	});
+		})
+		.fail(function(err) {
+			console.log(err)
+		});
+	}
+		$(function(){
+			$("#proveedores-table").on('click','.clickable-row',function(evt){
+				$(this).addClass('info').siblings().removeClass('info');
+				setProveedor(this);
+			});
+			$(document).on('click', '.pagination a', function(e) {
+		            getProductos($(this).attr('href').split('page=')[1]);
+		            e.preventDefault();
+		        });
+		});
+	</script>
 @endsection
 
 @section('main')
@@ -15,101 +63,57 @@
 					</div>
 				</div>
 				<div class="panel-body fixed-panel-nota">
+					@if(session('creado'))
+						<div class="alert alert-success alert-dismissible" role="alert">
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						  <strong>Listo!</strong> {{ session('creado') }}
+						</div>
+					@endif
+					@if(session('eliminado'))
+						<div class="alert alert-success alert-dismissible" role="alert">
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						  <strong>Listo!</strong> {{ session('eliminado') }}
+						</div>
+					@endif
+					@if(session('actualizado'))
+						<div class="alert alert-success alert-dismissible" role="alert">
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						  <strong>Listo!</strong> {{ session('actualizado') }}
+						</div>
+					@endif
 					<div class="table-fixed-header">
-						<table class="table table-hover table-condensed">
-							<thead>
-								<th>ColumnaA</th><th>ColumnaB</th><th>ColumnaC</th><th>ColumnaD</th><th>ColumnaE</th>
-							</thead>
-							<tbody>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							<tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-							</tbody>
+						<table class="table table-hover table-condensed" id="proveedores-table">
+							@if ($proveedores->first())
+								<thead class="bg-primary">
+									<tr>
+										@foreach ($proveedores[0]->getAttributes() as $etiqueta => $valor)
+											@if(strcmp($etiqueta, "id"))
+												<td> {{ $etiqueta }} </td>
+											@endif
+										@endforeach
+										<td class="col-md-1"></td>
+									</tr>
+								</thead>
+								<tbody id="proveedores-body">
+									@include('administrar.proveedores.proveedores-tabla', array('proveedores' => $proveedores))
+								</tbody>
+							@else
+							 <div class="alert alert-warning alert-dismissible" role="alert">
+							 	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							 	<strong>Aviso!</strong> No hay ningun proveedor registrado.
+							 </div>
+							@endif
 						</table>
+						<div class="text-center" id="proveedores-paginador">
+							@include('administrar.proveedores.paginador', array('proveedores' => $proveedores))
+						</div>
 					</div>	
 				</div>
 			</div>
 		</div>
 		<div class="col-md-4">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<div class="panel-title">
-						<h4 class="txt-white text-center">Proveedor</h4>
-					</div>
-				</div>
-				<div class="panel-body bg-default">
-					{!! Form::open(['url'=>'producto','class'=>'form-horizontal']) !!}
-						<table class="table">
-							<thead>
-								<tr>
-									<td class="col-md-4"></td>
-									<td class="col-md-8"></td>
-								</tr>
-							</thead>
-							<tr>
-								<td><label for="" class="col-md-4">Nombre:</label></td>
-								<td><input type="text" name="" id="input" class="form-control col-md-8" value="" required="required" pattern="" title=""></td>
-							</tr>
-							<tr>
-								<td><label for="" class="col-md-4">Empresa:</label></td>
-								<td><input type="text" name="" id="input" class="form-control col-md-8" value="" required="required" pattern="" title=""></td>
-							</tr>
-							<tr>
-								<td><label for="" class="col-md-4">Dirección:</label></td>
-								<td><input type="text" name="" id="input" class="form-control col-md-8" value="" required="required" pattern="" title=""></td>
-							</tr>
-							<tr>
-								<td><label for="" class="col-md-4">Telefono:</label></td>
-								<td><input type="text" name="" id="input" class="form-control col-md-8" value="" required="required" pattern="" title=""></td>
-							</tr>
-							<tr>
-								<td><label for="" class="col-md-4">Celular:</label></td>
-								<td><input type="text" name="" id="input" class="form-control col-md-8" value="" required="required" pattern="" title=""></td>
-							</tr>
-							<tr>
-								<td><label for="" class="col-md-4">Email:</label></td>
-								<td><input type="text" name="" id="input" class="form-control col-md-8" value="" required="required" pattern="" title=""></td>
-							</tr>
-							<tr>
-								<td><label for="" class="col-md-4">Nota:</label></td>
-								<td><input type="text" name="" id="input" class="form-control col-md-8" value="" required="required" pattern="" title=""></td>
-							</tr>
-							<tr>
-								<td colspan="2">
-									<button type="submit" class="btn btn-primary btn-block">Guardar</button>
-								</td>
-							</tr>
-
-						</table>
-						
-						
-					{!! Form::close() !!}
-				</div>
+			<div class="panel panel-primary" id="proveedores-set">
+				@include('administrar.proveedores.nuevo-form', array())
 			</div>
 		</div>
 	</div>

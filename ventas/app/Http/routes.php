@@ -19,13 +19,14 @@ Route::group(array('prefix' => 'administrar'), function(){
 	Route::group(array('prefix' => 'productos'), function(){
 		Route::get('/',['uses'=>'ProductosController@index']);
 	});
-	Route::group(array('prefix' => 'proveedores'), function(){
-		Route::get('/', function(){
-			return view('administrar.proveedores.index');
-		});
-	});
+	// Route::group(array('prefix' => 'proveedores'), function(){
+	// 	Route::get('/', function(){
+	// 		return view('administrar.proveedores.index');
+	// 	});
+	// });
 	Route::resource('productos', 'ProductosController');
 	Route::resource('categorias','CategoriasController');
+	Route::resource('proveedores','ProveedoresController');
 	Route::group(array('prefix'=>'categorias'),function (){
 		Route::post('/',['uses'=>'CategoriasController@index']);
 		Route::post('store',[

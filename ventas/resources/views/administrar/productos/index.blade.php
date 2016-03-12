@@ -24,6 +24,21 @@ $('.decimal').keyup(function(eve) {
     }
   });
 });
+function resetform(){
+	$.ajax({
+		url: 'productos/create',
+		type: 'GET',
+	})
+	.done(function(data) {
+		$('#productos-set').fadeOut('fast', function() {
+        $('#productos-set').html(data);
+        $('#productos-set').show('slow');
+    	});
+	})
+	.fail(function(err) {
+		console.log(err)
+	});
+}
 function getProductos(page) {
 		var categoria = $("#categoria_id").val();
 		page = page==null?1:page;
@@ -62,7 +77,6 @@ function setProducto(obj){
 	});
 }
 function changecategoria(obj) {
-	console.log("Change categoría.")
 	getProductos();
 }
 $(function() {
@@ -182,6 +196,12 @@ $(function() {
 						<div class="alert alert-success alert-dismissible" role="alert">
 						  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 						  <strong>Listo!</strong> {{ session('eliminado') }}
+						</div>
+					@endif
+					@if(session('actualizado'))
+						<div class="alert alert-success alert-dismissible" role="alert">
+						  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						  <strong>Listo!</strong> {{ session('actualizado') }}
 						</div>
 					@endif
 					<div class="table-fixed-header-catalogos " >
