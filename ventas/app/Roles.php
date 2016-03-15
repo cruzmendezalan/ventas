@@ -8,4 +8,5 @@ class Roles extends Model
 {
     //
     protected $table = 'roles';
+    protected $fillable = ['tipo'];
 }

@@ -1,4 +1,4 @@
-@foreach ($productos as $producto)
+@forelse ($productos as $producto)
 	<tr class="clickable-row" producto="{{$producto->id}}">
 		@foreach ($producto->getAttributes() as $etiqueta => $valor)
 			@if (!strcmp($etiqueta, "PrecioPublico"))
@@ -17,4 +17,8 @@
 			
 		@endforeach
 	</tr>
-@endforeach
+@empty
+<div class="alert alert-warning alert-dismissible" role="alert">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	<strong>Aviso!</strong> No hay productos con estas caracteristicas.
+@endforelse

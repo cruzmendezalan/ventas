@@ -8,6 +8,7 @@ use ventas\Http\Requests;
 use ventas\Http\Controllers\Controller;
 use \ventas\ProductosAntiguos;
 use \ventas\Productos;
+use \ventas\Roles;
 use DB;
 
 class HomeController extends Controller
@@ -17,7 +18,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function migracionproductos()
     {   
         $productosantiguos = ProductosAntiguos::all();
         DB::beginTransaction();
@@ -40,70 +41,14 @@ class HomeController extends Controller
 
 
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function crearroles()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        Roles::create([
+            'tipo'=>'ADMINISTRADOR'
+        ]);
+        Roles::create([
+            'tipo'=>'EMPLEADO'
+        ]);
+        return "Roles inserrtados"; 
     }
 }

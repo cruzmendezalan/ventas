@@ -14,7 +14,8 @@ class Usuarios extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
                                     CanResetPasswordContract
 {
-    //
+	use Authenticatable, Authorizable, CanResetPassword;
     protected $table = 'usuarios';
+    protected $hidden = ['password', 'remember_token'];
     protected $fillable = ['nombre', 'username', 'password'];
 }

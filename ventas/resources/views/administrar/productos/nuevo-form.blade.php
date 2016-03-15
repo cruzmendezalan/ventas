@@ -29,12 +29,7 @@
 			<tr>
 				<td><label for="" class="col-md-4">Proveedor:</label></td>
 				<td>
-					<select name="" id="" class="form-control">
-						<option value="a">Sin proveedor </option>
-						<option value="a">Proveedor A</option>
-						<option value="a">Proveedor B</option>
-						<option value="a">Proveedor C</option>
-					</select>
+					{!! Form::select("proveedores_id", $proveedores, null,array('class'=>'form-control','required')) !!}
 				</td>
 			</tr>
 			<tr>

@@ -41,12 +41,14 @@ function resetform(){
 }
 function getProductos(page) {
 		var categoria = $("#categoria_id").val();
+		var proveedor = $("#proveedor_id").val();
 		page = page==null?1:page;
         $.ajax({
             url: '?page=' + page,
             dataType: 'json',
             data:{
-            	'categoria':categoria
+            	'categoria':categoria,
+            	'proveedor':proveedor,
             },
         }).done(function(data) {
 	        	$("#productos-paginador").html(data['paginador'])
@@ -177,12 +179,7 @@ $(function() {
 							</td>
 							<td class="col-md-2">
 								<label for="" class="text-center">Proveedor</label>
-								<select name="" id="" class="form-control">
-									<option value="a">Todos </option>
-									<option value="a">Proveedor A</option>
-									<option value="a">Proveedor B</option>
-									<option value="a">Proveedor C</option>
-								</select>
+								{!! Form::select("proveedores_id", $proveedores, null,array('class'=>'form-control','required','id'=>'proveedor_id','onchange'=>'changecategoria(this);')) !!}
 							</td>
 							<td class="col-md-5">
 								<label for="">Ajustes de productos</label><br>
@@ -237,7 +234,7 @@ $(function() {
 		</div>
 		<div class="col-md-4">
 			<div class="panel panel-primary" id="productos-set">
-				@include('administrar.productos.nuevo-form', array('categorias',$categorias))
+				@include('administrar.productos.nuevo-form', array('categorias'=>$categorias,'proveedores'=>$proveedores))
 			</div>
 		</div>
 	</div>

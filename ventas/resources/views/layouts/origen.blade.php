@@ -51,7 +51,7 @@
 				      	        <li role="separator" class="divider"></li>
 				      	        <li><a href="#">Creditos</a></li>
 				      	        <li role="separator" class="divider"></li>
-				      	        <li><a href="#">Usuarios</a></li>
+				      	        <li><a href="{{ url('administrar/usuarios') }}">Usuarios</a></li>
 				      	    </ul>
 				      	</li>
 				      	<li><a href="#">Imprimir</a></li>

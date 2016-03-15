@@ -8,17 +8,23 @@ use ventas\Http\Requests;
 use ventas\Http\Controllers\Controller;
 use \ventas\Categorias;
 use \ventas\Productos;
+use \ventas\Proveedores;
 
 class ProductosController extends Controller
 {
     
-    private function display($categoria){
+    private function display($categoria,$proveedor){
         $objetosporpagina = 15;
         if ($categoria == null) {
             $categoria = 1;
         }
+        if ($proveedor == null) {
+            $proveedor = 1;
+        }
         $productos = Productos::join('categorias','productos.categorias_id','=','categorias.id')
+                                ->join('proveedores','productos.proveedores_id','=','proveedores.id')
                                 ->where('productos.categorias_id','=',$categoria)
+                                ->where('productos.proveedores_id','=',$proveedor)
                                 ->select('productos.nombre AS Nombre',
                                         'productos.descripcion as Descripción',
                                         'categorias.nombre as Categoría',
@@ -38,12 +44,14 @@ class ProductosController extends Controller
      */
     public function index(Request $request){
         $categorias = Categorias::lists('nombre','id');
-        $productos = $this->display($request->input('categoria'));
+        $proveedores = Proveedores::lists('empresa','id');
+        $productos = $this->display($request->input('categoria'),$request->input('proveedor'));
         if ($request->ajax()) {
                 return Response::json(['productos'=>view('administrar.productos.productos-tabla')->with("productos",$productos)->render(),'paginador'=>view('administrar.productos.paginador')->with('productos',$productos)->render()]);
             }
         return view('administrar.productos.index')->with("categorias",$categorias)
-                                                  ->with("productos",$productos);
+                                                  ->with("productos",$productos)
+                                                  ->with("proveedores",$proveedores);
     }
 
     /**
@@ -76,7 +84,7 @@ class ProductosController extends Controller
             'precio_publico'   => $request->input('precio_publico'),
             'precio_mayoreo'   => $request->input('precio_mayoreo'),
             'codigodebarras'   => $request->input('codigodebarras'),
-            'proveedores_id'   => $proveedor_id,
+            'proveedores_id'   => $request->input('proveedores_id'),
             'categorias_id'    => $request->input('categorias_id'),
         ]);
         return redirect()->route('administrar.productos.index')->with('creado',"El producto [".$producto->nombre."] se ha creado exitosamente.");
@@ -104,9 +112,11 @@ class ProductosController extends Controller
     {
         //
         $categorias = Categorias::lists('nombre','id');
+        $proveedores = Proveedores::lists('empresa','id');
+
         $producto = Productos::find($id);
         if ($request->ajax()) {
-            return Response::json(view('administrar.productos.set-form')->with("producto",$producto)->with("categorias",$categorias)->render());
+            return Response::json(view('administrar.productos.set-form')->with("producto",$producto)->with("categorias",$categorias)->with('proveedores',$proveedores)->render());
         }
     }
 
